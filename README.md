@@ -75,6 +75,10 @@ Other settings have the same configuration as [microsoft/vscode-black-formatter]
 
 ## Commands
 
+- `black-formatter.restart`: Restart Server
+- `black-formatter.installServer`: Install Server
+- `black-formatter.showOutput`: Show output channel
+
 ## Thanks
 
 - [microsoft/vscode-black-formatter](https://github.com/microsoft/vscode-black-formatter)
