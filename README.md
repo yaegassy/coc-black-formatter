@@ -32,8 +32,6 @@ To use the built-in installation feature, execute the following command.
 
 ### Detecting the "black" command from the execution environment
 
-vscode-black-formatter
-
 The `black` command used by `microsoft/vscode-black-formatter's langauge server` is the `black` command of the python environment installed with `microsoft/vscode-black-formatter's langauge server`.
 
 To use the `black` command installed in the virtual environment of a project created by `venv`, `poetry`, etc., `black-formatter.path` must be set to an absolute path.
