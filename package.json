@@ -1,0 +1,195 @@
+{
+  "name": "@yaegassy/coc-black-formatter",
+  "version": "0.0.1",
+  "vscodeBlackFormatterVersion": "2023.2.0",
+  "description": "microsoft/vscode-black-formatter’s langauge server extension for coc.nvim.",
+  "author": "yaegassy <yosstools@gmail.com>",
+  "license": "MIT",
+  "main": "lib/index.js",
+  "keywords": [
+    "coc.nvim",
+    "python",
+    "python3",
+    "black",
+    "formatting",
+    "coc-black",
+    "vim",
+    "neovim"
+  ],
+  "engines": {
+    "coc": "^0.0.80"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yaegassy/coc-black-formatter"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "lint": "eslint src --ext ts",
+    "clean": "rimraf lib",
+    "watch": "node esbuild.js --watch",
+    "build": "node esbuild.js",
+    "prepare": "node esbuild.js"
+  },
+  "prettier": {
+    "singleQuote": true,
+    "printWidth": 120,
+    "semi": true
+  },
+  "devDependencies": {
+    "@types/node": "^18.16.18",
+    "@types/node-fetch": "^2.6.2",
+    "@types/rimraf": "^3.0.2",
+    "@types/which": "^2.0.1",
+    "@typescript-eslint/eslint-plugin": "^5.60.0",
+    "@typescript-eslint/parser": "^5.60.0",
+    "coc.nvim": "^0.0.82",
+    "esbuild": "^0.16.17",
+    "eslint": "^8.43.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "extract-zip": "^2.0.1",
+    "https-proxy-agent": "^5.0.1",
+    "node-fetch": "^2.6.7",
+    "prettier": "^2.8.8",
+    "rimraf": "^3.0.2",
+    "typescript": "^5.0.4",
+    "which": "^3.0.0"
+  },
+  "activationEvents": [
+    "onLanguage:python"
+  ],
+  "contributes": {
+    "rootPatterns": [
+      {
+        "filetype": "python",
+        "patterns": [
+          ".black",
+          "pyproject.toml",
+          "setup.py",
+          "setup.cfg",
+          "tox.ini",
+          "Pipfile",
+          "requirements.txt"
+        ]
+      }
+    ],
+    "configuration": {
+      "type": "object",
+      "title": "coc-black-formatter configuration",
+      "properties": {
+        "black-formatter.enable": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable coc-black-formatter extension."
+        },
+        "black-formatter.useDetectBlackCommand": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically detects the black command in the execution environment and sets `black-formatter.path`."
+        },
+        "black-formatter.builtin.pythonPath": {
+          "type": "string",
+          "default": "",
+          "description": "Python 3.x path (Absolute path) to be used for built-in install."
+        },
+        "black-formatter.args": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "markdownDescription": "Arguments passed in. Each argument is a separate string in the array.",
+          "scope": "resource",
+          "type": "array"
+        },
+        "black-formatter.importStrategy": {
+          "default": "useBundled",
+          "enum": [
+            "fromEnvironment",
+            "useBundled"
+          ],
+          "markdownDescription": "Defines where `black` is imported from. This setting may be ignored if `black-formatter.path` is set.",
+          "markdownEnumDescriptions": [
+            "Use `black` from environment, fallback to bundled version only if `black` not available in the environment.",
+            "Always use the bundled version of `black`."
+          ],
+          "scope": "resource",
+          "type": "string"
+        },
+        "black-formatter.interpreter": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "markdownDescription": "When set to a path to python executable, extension will use that to launch the server and any subprocess.",
+          "scope": "resource",
+          "type": "array"
+        },
+        "black-formatter.path": {
+          "default": [],
+          "examples": [
+            [
+              "-m",
+              "black",
+              "~/.env/python"
+            ],
+            [
+              "~/global_env/black"
+            ]
+          ],
+          "items": {
+            "type": "string"
+          },
+          "markdownDescription": "When set to a path to `black` binary, extension will use that for linting. NOTE: Using this option may slowdown linting.",
+          "scope": "resource",
+          "type": "array"
+        },
+        "black-formatter.showNotifications": {
+          "default": "off",
+          "enum": [
+            "always",
+            "off",
+            "onError",
+            "onWarning"
+          ],
+          "markdownDescription": "Controls when notifications are shown by this extension.",
+          "markdownEnumDescriptions": [
+            "Notifications are show for anything that the server chooses to show.",
+            "All notifications are turned off, any errors or warning are still available in the logs.",
+            "Notifications are shown only in the case of an error.",
+            "Notifications are shown for errors and warnings."
+          ],
+          "scope": "machine",
+          "type": "string"
+        },
+        "black-formatter.trace.server": {
+          "type": "string",
+          "enum": [
+            "off",
+            "messages",
+            "verbose"
+          ],
+          "default": "off",
+          "description": "Traces the communication between coc.nvim and the language server."
+        }
+      }
+    },
+    "commands": [
+      {
+        "title": "Restart Server",
+        "command": "black-formatter.restart"
+      },
+      {
+        "title": "Install Server",
+        "command": "black-formatter.installServer"
+      },
+      {
+        "title": "Show output channel",
+        "command": "black-formatter.showOutput"
+      }
+    ]
+  },
+  "dependencies": {}
+}
