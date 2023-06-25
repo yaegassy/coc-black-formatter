@@ -6,12 +6,12 @@ import { EXTENSION_NS } from './constant';
 import { getBlackLspBlackPath, getBlackLspPythonPath, getBlackLspServerPath } from './tool';
 
 export function createLanguageClient(context: ExtensionContext) {
-  const blackLspPythonCommandPathcommand = getBlackLspPythonPath(context);
+  const blackLspPythonCommandPath = getBlackLspPythonPath(context);
   const blackLspServerScriptPath = getBlackLspServerPath(context);
-  if (!blackLspPythonCommandPathcommand || !blackLspServerScriptPath) return;
+  if (!blackLspPythonCommandPath || !blackLspServerScriptPath) return;
 
   const serverOptions: ServerOptions = {
-    command: blackLspPythonCommandPathcommand,
+    command: blackLspPythonCommandPath,
     args: [blackLspServerScriptPath],
   };
 
