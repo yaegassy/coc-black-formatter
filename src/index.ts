@@ -22,7 +22,7 @@ export async function activate(context: ExtensionContext): Promise<void> {
   const blackLspBlackCommandPath = getBlackLspBlackPath(context);
 
   if (!blackLspBlackCommandPath) {
-    installServerCommandFeature.register(context);
+    installServerCommandFeature.register(context, client);
     window.showWarningMessage(
       `coc-black-formatter | black-formatter language server does not exist. please execute ":CocCommand ${EXTENSION_NS}.installServer"`
     );
@@ -33,7 +33,7 @@ export async function activate(context: ExtensionContext): Promise<void> {
   if (!client) return;
   context.subscriptions.push(services.registLanguageClient(client));
 
-  installServerCommandFeature.register(context);
+  installServerCommandFeature.register(context, client);
   restartCommandFeature.register(context, client);
   showOutputCommandFeature.register(context, client);
 }
