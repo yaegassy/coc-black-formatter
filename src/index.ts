@@ -6,8 +6,8 @@ import { createLanguageClient } from './client';
 import * as installServerCommandFeature from './commands/installServer';
 import * as restartCommandFeature from './commands/restart';
 import * as showOutputCommandFeature from './commands/showOutput';
-import { getBlackLspBlackPath } from './tool';
 import { EXTENSION_NS } from './constant';
+import { getBlackLspBlackPath } from './tool';
 
 let client: LanguageClient | undefined;
 

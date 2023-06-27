@@ -11,7 +11,7 @@ import rimraf from 'rimraf';
 import stream from 'stream';
 import util from 'util';
 
-import { VSCODE_BLACK_FORMATTER_VERSION, UPSTREAM_NAME, EXTENSION_NS } from '../constant';
+import { EXTENSION_NS, UPSTREAM_NAME, VSCODE_BLACK_FORMATTER_VERSION } from '../constant';
 import { getPythonPath } from '../tool';
 
 const pipeline = util.promisify(stream.pipeline);
