@@ -6,6 +6,7 @@ import { createLanguageClient } from './client';
 import * as installServerCommandFeature from './commands/installServer';
 import * as restartCommandFeature from './commands/restart';
 import * as showOutputCommandFeature from './commands/showOutput';
+import * as versionCommandFeature from './commands/version';
 import { EXTENSION_NS } from './constant';
 import { getBlackLspBlackPath } from './tool';
 
@@ -36,6 +37,7 @@ export async function activate(context: ExtensionContext): Promise<void> {
   installServerCommandFeature.register(context, client);
   restartCommandFeature.register(context, client);
   showOutputCommandFeature.register(context, client);
+  versionCommandFeature.register(context);
 }
 
 export async function deactivate(): Promise<void> {

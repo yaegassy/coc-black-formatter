@@ -190,6 +190,10 @@
       {
         "title": "Show output channel",
         "command": "black-formatter.showOutput"
+      },
+      {
+        "title": "Show the version of the server installed by the extension",
+        "command": "black-formatter.version"
       }
     ]
   },

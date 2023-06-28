@@ -76,6 +76,7 @@ Other settings have the same configuration as [microsoft/vscode-black-formatter]
 - `black-formatter.restart`: Restart Server
 - `black-formatter.installServer`: Install Server
 - `black-formatter.showOutput`: Show output channel
+- `black-formatter.version`: Show the version of the server installed by the extension
 
 ## Thanks
 
