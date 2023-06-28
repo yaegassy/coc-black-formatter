@@ -97,6 +97,16 @@
           "default": "",
           "description": "Python 3.x path (Absolute path) to be used for built-in install."
         },
+        "black-formatter.dev.serverInterpreter": {
+          "type": "string",
+          "default": "",
+          "markdownDescription": "(DEV) Set the python interpreter where the server is installed."
+        },
+        "black-formatter.dev.serverScript": {
+          "type": "string",
+          "default": "",
+          "markdownDescription": "(DEV) Set server script path."
+        },
         "black-formatter.args": {
           "default": [],
           "items": {

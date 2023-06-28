@@ -3,16 +3,23 @@ import { ExtensionContext, LanguageClient, LanguageClientOptions, ServerOptions,
 import which from 'which';
 
 import { EXTENSION_NS } from './constant';
-import { getBlackLspBlackPath, getBlackLspPythonPath, getBlackLspServerPath } from './tool';
+import { getBlackLspBlackPath, getBlackLspServerInterpreterPath, getBlackLspServerScriptPath } from './tool';
 
 export function createLanguageClient(context: ExtensionContext) {
-  const blackLspPythonCommandPath = getBlackLspPythonPath(context);
-  const blackLspServerScriptPath = getBlackLspServerPath(context);
-  if (!blackLspPythonCommandPath || !blackLspServerScriptPath) return;
+  const devServerInterpreter = workspace.expand(
+    workspace.getConfiguration(EXTENSION_NS).get<string>('dev.serverInterpreter', '')
+  );
+  const devServerScript = workspace.expand(
+    workspace.getConfiguration(EXTENSION_NS).get<string>('dev.serverScript', '')
+  );
+
+  const serverInterpreter = devServerInterpreter ? devServerInterpreter : getBlackLspServerInterpreterPath(context);
+  const serverScript = devServerScript ? devServerScript : getBlackLspServerScriptPath(context);
+  if (!serverInterpreter || !serverScript) return;
 
   const serverOptions: ServerOptions = {
-    command: blackLspPythonCommandPath,
-    args: [blackLspServerScriptPath],
+    command: serverInterpreter,
+    args: [serverScript],
   };
 
   const initializationOptions = getInitializationOptions(context);

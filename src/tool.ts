@@ -44,7 +44,7 @@ export function getBlackLspBlackPath(context: ExtensionContext) {
   return toolPath;
 }
 
-export function getBlackLspPythonPath(context: ExtensionContext) {
+export function getBlackLspServerInterpreterPath(context: ExtensionContext) {
   let pythonCommandPath: string | undefined = undefined;
 
   if (
@@ -61,7 +61,7 @@ export function getBlackLspPythonPath(context: ExtensionContext) {
   return pythonCommandPath;
 }
 
-export function getBlackLspServerPath(context: ExtensionContext) {
+export function getBlackLspServerScriptPath(context: ExtensionContext) {
   let serverScriptPath: string | undefined = undefined;
 
   if (fs.existsSync(path.join(context.storagePath, 'vscode-black-formatter', 'bundled', 'tool', 'lsp_server.py'))) {
