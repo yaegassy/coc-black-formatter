@@ -6,7 +6,9 @@
 
 **CocInstall**:
 
-> TODO
+```
+:CocInstall @yaegassy/coc-black-formatter
+```
 
 **When using a plugin manager, etc**:
 
