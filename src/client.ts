@@ -1,4 +1,4 @@
-import { ExtensionContext, LanguageClient, LanguageClientOptions, ServerOptions, workspace } from 'coc.nvim';
+import { ExtensionContext, LanguageClient, LanguageClientOptions, ServerOptions, workspace, Uri } from 'coc.nvim';
 
 import which from 'which';
 
@@ -41,6 +41,8 @@ type ShowNotifications = 'off' | 'onError' | 'onWarning' | 'always';
 
 type ExtensionInitializationOptions = {
   globalSettings: {
+    cwd: string;
+    workspace: string;
     args: string[];
     path: string[];
     importStrategy: ImportStrategy;
@@ -54,6 +56,8 @@ function convertFromWorkspaceConfigToInitializationOptions() {
 
   const initializationOptions = <ExtensionInitializationOptions>{
     globalSettings: {
+      cwd: workspace.root,
+      workspace: Uri.parse(workspace.root).toString(),
       args: settings.get('args'),
       path: settings.get('path'),
       importStrategy: settings.get<ImportStrategy>(`importStrategy`) ?? 'fromEnvironment',
