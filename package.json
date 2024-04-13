@@ -1,6 +1,6 @@
 {
   "name": "@yaegassy/coc-black-formatter",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "vscodeBlackFormatterVersion": "v2024.2.0",
   "description": "microsoft/vscode-black-formatter’s langauge server extension for coc.nvim.",
   "author": "yaegassy <yosstools@gmail.com>",
