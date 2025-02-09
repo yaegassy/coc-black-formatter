@@ -1,5 +1,15 @@
 [
   {
+    "name": "v2024.6.0",
+    "zipball_url": "https://api.github.com/repos/microsoft/vscode-black-formatter/zipball/refs/tags/v2024.6.0",
+    "tarball_url": "https://api.github.com/repos/microsoft/vscode-black-formatter/tarball/refs/tags/v2024.6.0",
+    "commit": {
+      "sha": "6861ce282ff0fc9aad8b332d8e2f6aae8c263df7",
+      "url": "https://api.github.com/repos/microsoft/vscode-black-formatter/commits/6861ce282ff0fc9aad8b332d8e2f6aae8c263df7"
+    },
+    "node_id": "REF_kwDOHIRw07NyZWZzL3RhZ3MvdjIwMjQuNi4w"
+  },
+  {
     "name": "v2024.4.0",
     "zipball_url": "https://api.github.com/repos/microsoft/vscode-black-formatter/zipball/refs/tags/v2024.4.0",
     "tarball_url": "https://api.github.com/repos/microsoft/vscode-black-formatter/tarball/refs/tags/v2024.4.0",
