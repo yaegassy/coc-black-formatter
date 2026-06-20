@@ -1,4 +1,4 @@
-import { ExtensionContext, LanguageClient, LanguageClientOptions, ServerOptions, workspace, Uri } from 'coc.nvim';
+import { ExtensionContext, LanguageClient, LanguageClientOptions, ServerOptions, Uri, workspace } from 'coc.nvim';
 
 import which from 'which';
 

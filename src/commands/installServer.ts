@@ -1,6 +1,5 @@
-import { commands, ExtensionContext, LanguageClient, ServiceStat, window } from 'coc.nvim';
-
 import child_process from 'child_process';
+import { commands, ExtensionContext, LanguageClient, ServiceStat, window } from 'coc.nvim';
 import { randomBytes } from 'crypto';
 import extract from 'extract-zip';
 import fs from 'fs';
@@ -102,7 +101,6 @@ async function doExtract(context: ExtensionContext) {
   if (fs.existsSync(zipPath)) {
     await extract(zipPath, {
       dir: extractPath,
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       onEntry(entry, _zipfile) {
         extractedFilenames.push(entry.fileName);
       },
