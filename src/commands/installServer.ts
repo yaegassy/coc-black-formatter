@@ -1,7 +1,7 @@
 import child_process from 'child_process';
 import { commands, ExtensionContext, LanguageClient, ServiceStat, window } from 'coc.nvim';
 import { randomBytes } from 'crypto';
-import extract from 'extract-zip';
+import { unzipSync } from 'fflate';
 import fs from 'fs';
 import { HttpsProxyAgent } from 'https-proxy-agent';
 import fetch from 'node-fetch';
@@ -10,7 +10,12 @@ import rimraf from 'rimraf';
 import stream from 'stream';
 import util from 'util';
 
-import { EXTENSION_NS, UPSTREAM_NAME, VSCODE_BLACK_FORMATTER_VERSION } from '../constant';
+import {
+  EXTENSION_NS,
+  UPSTREAM_NAME,
+  VSCODE_BLACK_FORMATTER_VERSION,
+  VSCODE_COMMON_PYTHON_LSP_VERSION,
+} from '../constant';
 import { getPythonPath } from '../tool';
 
 const pipeline = util.promisify(stream.pipeline);
@@ -92,22 +97,33 @@ async function doDownload(context: ExtensionContext): Promise<void> {
 
 async function doExtract(context: ExtensionContext) {
   const zipPath = path.join(context.storagePath, `${UPSTREAM_NAME}.zip`);
+
   const extractPath = path.join(context.storagePath);
-  const extractedFilenames: string[] = [];
   const targetPath = path.join(context.storagePath, `${UPSTREAM_NAME}`);
 
   rimraf.sync(targetPath);
 
   if (fs.existsSync(zipPath)) {
-    await extract(zipPath, {
-      dir: extractPath,
-      onEntry(entry, _zipfile) {
-        extractedFilenames.push(entry.fileName);
-      },
-    });
+    const buf = fs.readFileSync(zipPath);
+    const files = unzipSync(new Uint8Array(buf));
+    const extractedFilenames = Object.keys(files);
 
-    const extractedBaseDirName = extractedFilenames[0];
+    const extractedBaseDirName = extractedFilenames[0].split('/')[0];
     const extractedBasePath = path.join(context.storagePath, extractedBaseDirName);
+
+    // Clean up any leftover extraction from a previous run
+    rimraf.sync(extractedBasePath);
+
+    for (const name of extractedFilenames) {
+      const dest = path.join(extractPath, name);
+      // Directory entries end with a slash and have no data
+      if (name.endsWith('/')) {
+        fs.mkdirSync(dest, { recursive: true });
+        continue;
+      }
+      fs.mkdirSync(path.dirname(dest), { recursive: true });
+      fs.writeFileSync(dest, files[name]);
+    }
 
     // Add text file for tag version identification
     const versionTxtFilePath = path.join(extractedBasePath, 'version.txt');
@@ -115,6 +131,13 @@ async function doExtract(context: ExtensionContext) {
 
     fs.renameSync(extractedBasePath, targetPath);
     rimraf.sync(zipPath);
+
+    // Verify the extraction actually produced file contents (guards against
+    // silently broken archives/decompression).
+    const requirementsTxtPath = path.join(targetPath, 'requirements.txt');
+    if (!fs.existsSync(requirementsTxtPath) || fs.statSync(requirementsTxtPath).size === 0) {
+      throw new Error(`Extraction failed: ${requirementsTxtPath} is missing or empty`);
+    }
   }
 }
 
@@ -131,8 +154,18 @@ async function doInstall(pythonCommand: string, context: ExtensionContext): Prom
   statusItem.text = `Installing black-formatter language server in progress...`;
   statusItem.show();
 
+  // **MEMO**:
+  //
+  // microsoft/vscode-black-formatter's language server imports the
+  // `vscode_common_python_lsp` package, which is installed separately from
+  // requirements.txt in its noxfile (the `install_bundled_libs` session). The
+  // pinned version is tracked in this extension's package.json
+  // (`vscodeCommonPythonLspVersion`) and must be kept in sync when bumping
+  // `vscodeBlackFormatterVersion`.
   const installCmd =
-    `"${pythonCommand}" -m venv ${pathVenv} && ` + `${pathVenvPython} -m pip install -r ${requirementsTxtPath}`;
+    `"${pythonCommand}" -m venv ${pathVenv} && ` +
+    `${pathVenvPython} -m pip install -r ${requirementsTxtPath} && ` +
+    `${pathVenvPython} -m pip install vscode-common-python-lsp==${VSCODE_COMMON_PYTHON_LSP_VERSION}`;
 
   rimraf.sync(pathVenv);
   try {

@@ -2,6 +2,7 @@
   "name": "@yaegassy/coc-black-formatter",
   "version": "0.1.10",
   "vscodeBlackFormatterVersion": "v2026.6.0",
+  "vscodeCommonPythonLspVersion": "0.5.1",
   "description": "microsoft/vscode-black-formatter’s language server extension for coc.nvim.",
   "author": "yaegassy <yosstools@gmail.com>",
   "license": "MIT",
@@ -43,17 +44,17 @@
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.0",
-    "@types/node": "^18.17.2",
+    "@types/node": "^22",
     "@types/node-fetch": "^2.6.2",
     "@types/rimraf": "^3.0.2",
     "@types/which": "^2.0.1",
     "coc.nvim": "^0.0.82",
     "esbuild": "^0.16.17",
-    "extract-zip": "^2.0.1",
+    "fflate": "^0.8.3",
     "https-proxy-agent": "^5.0.1",
     "node-fetch": "^2.6.7",
     "rimraf": "^3.0.2",
-    "typescript": "^5.1.6",
+    "typescript": "^5.7.3",
     "which": "^3.0.0"
   },
   "activationEvents": [
